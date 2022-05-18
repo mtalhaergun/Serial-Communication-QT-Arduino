@@ -15,37 +15,29 @@ void setup() {
 void loop() 
 {
       sayi = Serial.parseInt();
-      if(sayi != 0)
+      while(sayi > -1)
       {
-        for(int i=0;i<sayi+i;i++)
+        if(sayi != 0)
         {
-          sayi--;
-          Serial.print(sayi);
-          Serial.flush();
-          for(int j=0;j<1000;j++)
+            sayi--;
+            Serial.print(sayi);
+            Serial.flush(); 
+            if(sayi == 0)return; 
+        }
+
+        for(int j=0;j<1000;j++)
+        {
+          char ledchar = Serial.read();
+          if(ledchar == 'a')
           {
-            delay(1);
-            char ledchar = Serial.read();
-            if(ledchar == 'a')
-            {
-              analogWrite(ledPin, 255);
-            }
-            else if(ledchar == 'k')
-            { 
-              analogWrite(ledPin, 0);
-            }    
-          }  
-        }       
-      }
-      else{
-        char ledchar = Serial.read();
-        if(ledchar == 'a')
-        {
-          analogWrite(ledPin, 255);
+            analogWrite(ledPin, 255);
+          }
+          else if(ledchar == 'k')
+          { 
+            analogWrite(ledPin, 0);
+          }   
+          if(sayi == 0)return; 
+          delay(1);
         }
-        else if(ledchar == 'k')
-        {
-          analogWrite(ledPin, 0);
-        }
-      }
+      }          
 }
